@@ -27,17 +27,25 @@ const authMiddle = (req,res,next) =>{
 app.post('/authenticate', authMiddle, (req,res) => {
 
    
-    if(!req.body.secretQsnQsn || !req.body.secretAnsAns || req.headers.age || req.body.password){
-        res.status(400).send("Missing body or header");
+    if(!req.body.secretQsn || !req.body.secretAns){
+        res.status(400).send("Missing body");
+    }else if(!req.headers.age || !req.headers.password){
+         res.status(400).send("Missing header");
     }
     const secretQsn = req.body.secretQsn;
     const secretAns = req.body.secretAns;
     const age = req.headers.age;
     const password = req.headers.password;
 
+    if(secretQsn != 'What is ur fav car' || secretAns != 'Range Rover'){
+        res.status(400).send("Secret Question/Ans is incorrect");
+    }else if(age != 22 || password != 'hehe'){
+        res.status(400).send("Age/Password is incorrect");
+    }else{
+        res.status(200).send("Welcome to the club");
+    }
 
-
-    res.send("hello");
+    
 });
 
 
