@@ -28,9 +28,9 @@ app.post('/authenticate', authMiddle, (req,res) => {
 
    
     if(!req.body.secretQsn || !req.body.secretAns){
-        res.status(400).send("Missing body");
+        return res.status(400).send("Missing body");
     }else if(!req.headers.age || !req.headers.password){
-         res.status(400).send("Missing header");
+         return res.status(400).send("Missing header");
     }
     const secretQsn = req.body.secretQsn;
     const secretAns = req.body.secretAns;
@@ -38,9 +38,9 @@ app.post('/authenticate', authMiddle, (req,res) => {
     const password = req.headers.password;
 
     if(secretQsn != 'What is ur fav car' || secretAns != 'Range Rover'){
-        res.status(400).send("Secret Question/Ans is incorrect");
+        return res.status(400).send("Secret Question/Ans is incorrect");
     }else if(age != 22 || password != 'hehe'){
-        res.status(400).send("Age/Password is incorrect");
+        return res.status(400).send("Age/Password is incorrect");
     }else{
         res.status(200).send("Welcome to the club");
     }
