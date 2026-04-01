@@ -36,12 +36,23 @@ app.post('/signUp', signMiddleWare, (req,res) => {
 });
 
 app.post('/signIn',signMiddleWare,(req,res) => {
-    
+    const {email,password} = req.headers;
+    const {name,age} = req.body;
+
+    const authenticatedUser = details.find(user => user.email === email && user.password === password && user.age == age && user.name === name);
+
+    if(authenticatedUser){
+        res.status(200).json({
+            "msg" : "Valid User.", 
+            "name" : authenticatedUser.name
+        });
+    }else{
+        res.status(400).send("Wrong creds");
+    }
 });
 
-app.get('/test', (req,res) => {
-    res.send(details);
-});
+
+
 
 
 module.exports = app;
