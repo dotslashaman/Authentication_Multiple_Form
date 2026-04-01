@@ -23,10 +23,13 @@ const signUpMiddleWare = (req,res,next) => {
 }
 
 app.post('/signUp', signUpMiddleWare, (req,res) => {
-    req.body = details;
+   details.push(req.body);
     res.send("done");
 });
 
+app.get('/test', (req,res) => {
+    res.send(details);
+})
 
 
 module.exports = app;
