@@ -8,7 +8,7 @@ app.use(express.json());
 
 const details = [];
 
-const signUpMiddleWare = (req,res,next) => {
+const signMiddleWare = (req,res,next) => {
     if(!req.body.name || !req.body.age){
         return res.status(400).json({
             "msg" : "Name or Age is missing"
@@ -22,14 +22,26 @@ const signUpMiddleWare = (req,res,next) => {
     }
 }
 
-app.post('/signUp', signUpMiddleWare, (req,res) => {
-   details.push(req.body);
-    res.send("done");
+app.post('/signUp', signMiddleWare, (req,res) => {
+
+   const newUser = {
+    name : req.body.name,
+    age : req.body.age,
+    email : req.headers.email,
+    password : req.headers.password
+   }
+   details.push(newUser);
+
+   res.status(201).send("Sign Up Successful");
+});
+
+app.post('/signIn',signMiddleWare,(req,res) => {
+    
 });
 
 app.get('/test', (req,res) => {
     res.send(details);
-})
+});
 
 
 module.exports = app;
