@@ -26,13 +26,18 @@ const authMiddle = (req,res,next) =>{
 
 app.post('/authenticate', authMiddle, (req,res) => {
 
-    
+   
+    if(!req.body.secretQsnQsn || !req.body.secretAnsAns || req.headers.age || req.body.password){
+        res.status(400).send("Missing body or header");
+    }
     const secretQsn = req.body.secretQsn;
     const secretAns = req.body.secretAns;
     const age = req.headers.age;
     const password = req.headers.password;
 
 
+
+    res.send("hello");
 });
 
 
