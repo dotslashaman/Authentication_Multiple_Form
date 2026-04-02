@@ -23,16 +23,25 @@ const signMiddleWare = (req,res,next) => {
 }
 
 app.post('/signUp', signMiddleWare, (req,res) => {
-
+    const email = req.headers.email;
    const newUser = {
     name : req.body.name,
     age : req.body.age,
     email : req.headers.email,
     password : req.headers.password
    }
-   details.push(newUser);
+   const existingUser = details.find(user => user.email === email);
+   
+   if(!existingUser){
+    details.push(newUser);
 
    res.status(201).send("Sign Up Successful");
+   }else{
+    return res.status(400).json({
+        "msg" : "User already exists"
+    })
+   }
+   
 });
 
 app.post('/signIn',signMiddleWare,(req,res) => {
